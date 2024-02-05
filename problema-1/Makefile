@@ -1,10 +1,15 @@
-NAME = main
+bin/main: src/main.c bin/mochila_pd.o
+	gcc -o bin/main src/main.c bin/mochila_pd.o
 
-bin/$(NAME): bin/$(NAME).o
-	ld -o bin/$(NAME) bin/$(NAME).o
-
-bin/$(NAME).o: src/$(NAME).asm bin/
-	nasm -f elf64 -o bin/$(NAME).o src/$(NAME).asm
+bin/mochila_pd.o: src/lib/mochila_pd.asm bin/
+	nasm -f elf64 -o bin/mochila_pd.o src/lib/mochila_pd.asm
 
 bin/:
 	mkdir bin
+
+all: clean bin/main
+
+.PHONY: clean
+clean:
+	rm -rf bin
+
