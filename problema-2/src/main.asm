@@ -1,15 +1,17 @@
 extern int2str
+extern mcds
 
 section .data
     graph:
-    ;db 0, 1, 0, 0, 0, 0, 0, 0
-    ;db 1, 0, 1, 0, 0, 0, 0, 0
-    ;db 0, 1, 0, 1, 0, 0, 0, 0
-    ;db 0, 0, 1, 0, 1, 0, 0, 0
-    ;db 0, 0, 0, 1, 0, 1, 0, 0
-    ;db 0, 0, 0, 0, 1, 0, 1, 0
-    ;db 0, 0, 0, 0, 0, 1, 0, 1
-    ;db 0, 0, 0, 0, 0, 0, 1, 0
+    db 0, 1, 0, 0, 0, 0, 0, 0
+    db 1, 0, 1, 0, 0, 0, 0, 0
+    db 0, 1, 0, 1, 0, 0, 0, 0
+    db 0, 0, 1, 0, 1, 0, 0, 0
+    db 0, 0, 0, 1, 0, 1, 0, 0
+    db 0, 0, 0, 0, 1, 0, 1, 0
+    db 0, 0, 0, 0, 0, 1, 0, 1
+    db 0, 0, 0, 0, 0, 0, 1, 0
+
     db 0, 1, 0, 0, 1, 0, 0, 0
     db 1, 0, 1, 0, 0, 0, 0, 0
     db 0, 1, 0, 1, 0, 0, 0, 0
@@ -29,9 +31,10 @@ section .text
 global _start
 
 _start:
-    mov rdi, graph
-    mov rsi, covered
-    mov rdx, cds
+    mov rdi, 8
+    mov rsi, graph
+    mov rdx, covered
+    mov rcx, cds
     call mcds
     mov rdi, rax
     sub rdi, 8
@@ -43,6 +46,11 @@ _start:
     mov rdi, 1
     mov rsi, buf
     mov rdx, 10
+    syscall
+    mov rax, 0x01
+    mov rdi, 1
+    mov rsi, newline
+    mov rdx, 1
     syscall
 
 _exit:
@@ -108,7 +116,7 @@ colloop:
 
 
 ; mcds(bool *graph, bool *covered, bool *cds) -> u64
-mcds:
+mcds2:
     mov r8, rdx
     ; rdi: *graph
     ; rsi: *covered
