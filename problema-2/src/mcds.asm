@@ -1,6 +1,7 @@
 ; ==============================================================================
 ; ### mcds.asm
-; Minha implementação da solução do problema Minimum Connected Dominating Set
+; Minha implementação da solução aproximada do problema Minimum Connected
+; Dominating Set
 ; By: anachan01h
 ; ==============================================================================
 
@@ -109,7 +110,7 @@ mcds_loop3:
     xor r11, r11                ; r11: u <- 0
     xor rax, rax                ; rax: m <- 0
 mcds_loop4:
-    cmp byte [rcx + r11], 1      ; u not in cds
+    cmp byte [rcx + r11], 1     ; u not in cds
     jne mcds_loop4_next
     inc rax                     ; m++
 mcds_loop4_next:
